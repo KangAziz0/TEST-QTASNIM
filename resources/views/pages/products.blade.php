@@ -104,6 +104,7 @@
         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Name Product</th>
         <th class=" text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Price</th>
         <th class=" text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Stock</th>
+        <th class=" text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Category</th>
         <th class="text-secondary text-center">Action</th>
       </tr>
     </thead>
@@ -145,6 +146,10 @@
         {
           data: 'stock',
           name: 'stock'
+        },
+        {
+          data: 'category',
+          name: 'category'
         },
         {
           data: 'action',

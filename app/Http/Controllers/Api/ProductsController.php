@@ -21,9 +21,12 @@ class ProductsController extends Controller
 
     public function datatable()
     {
-        $products = Product::latest();
+        $products = Product::with('Category')->get();
         return DataTables::of($products)
             ->addIndexColumn()
+            ->addColumn('category', function($row){
+                return $row->category ? $row->category->name : 'No Category'; // Menampilkan nama kategori
+            })
             ->addColumn('action', function ($row) {
                 return '<button data-id="' . $row->id . '" class="btn btn-info edit">Edit</button>      <button data-id="' . $row->id . '" class="btn btn-danger delete">Delete</button>';
             })
@@ -86,5 +89,11 @@ class ProductsController extends Controller
     {
         Product::where('id', $id)->delete();
         return response()->json(['message' => 'Product Deleted']);
+    }
+
+    public function getProductsByCategory($categoryId)
+    {
+        $products = Product::where('id_category', $categoryId)->pluck('name', 'id');
+        return response()->json($products);
     }
 }

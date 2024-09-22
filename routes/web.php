@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\CategoriesController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductsController;
+use App\Http\Controllers\Api\SalesController;
+use App\Http\Controllers\Api\TransactionController;
 use App\Models\Categories;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -25,3 +28,5 @@ Route::get('/products',function(){
     return view('pages.products',$data);
 })->name('products');
 Route::get('/categories',[CategoriesController::class,'index'])->name('categories');
+Route::get('/transactions',[TransactionController::class,'index'])->name('transaction');
+Route::get('/reports',[TransactionController::class,'report'])->name('reports');

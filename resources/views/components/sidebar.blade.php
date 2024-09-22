@@ -33,6 +33,22 @@
           <span class="nav-link-text ms-1">Categories</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link {{ Request::routeIs('transaction') ? 'bg-gradient-danger btn btn-sm text-white' : '' }}" href="/transactions">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-cart {{Request::routeIs('transaction') ? 'text-white' : 'text-warning'}} text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Transaction</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ Request::routeIs('reports') ? 'bg-gradient-danger btn btn-sm text-white' : '' }}" href="/reports">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-cart {{Request::routeIs('reports') ? 'text-white' : 'text-warning'}} text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Transaction Reports</span>
+        </a>
+      </li>
     </ul>
   </div>
 </aside>
