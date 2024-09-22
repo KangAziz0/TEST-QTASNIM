@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Categories;
 use App\Models\Product;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -17,7 +18,7 @@ class TransactionController extends Controller
     public function index()
     {
         $data['categories'] = Categories::all();
-        
+
         return view('pages.transaction', $data);
     }
 
@@ -38,10 +39,14 @@ class TransactionController extends Controller
     public function datatable(Request $request)
     {
         if ($request->input('category_filter')) {
-            $data = Transaction::where('category', $request->category_filter)->with('products')->get();
+            $data = Transaction::where('category', $request->category_filter)->with('products')->orderBy('sold','desc')->get();
+        }else if($request->input('range_filter')){
+            // $data = Transaction::whereBetween('date_transaction',[$request->start_date,$request->end_date])->where('category',$request->category_filter)->with('products')->get();
+            $dateRange = explode(' - ', $request->range_filter);
+            $startDate = Carbon::parse($dateRange[0])->startOfDay();
+            $endDate = Carbon::parse($dateRange[1])->endOfDay();
+            $data = Transaction::whereBetween('created_at',[$startDate,$endDate])->with('products')->get();
         } else {
-            // Urutkan berdasarkan jumlah terjual
-
             $data = Transaction::with('products')->get();
         }
         return DataTables::of($data)

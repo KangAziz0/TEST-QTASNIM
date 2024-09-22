@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('subtitle','Sale Transaction')
+@section('subtitle','Product Transaction')
 @section('content')
 
 <div class="bg-white p-3 rounded">
@@ -7,6 +7,7 @@
     <button type="button" class="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#modalCreateTrans">
       Create
     </button>
+
     <!-- Modal -->
     <div class="modal fade" id="modalCreateTrans" tabindex="-1" role="dialog" aria-labelledby="exampleModalMessageTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -57,6 +58,10 @@
       @endforeach
     </select>
   </div>
+  <div class="range ml-1"style="display: none;">
+    <label for="">Filter Date</label>
+    <input type="text" name="daterange" value=""  id="range"  class="form-control" />
+  </div>
 
   <table class="table" id="datatable">
     <thead>
@@ -94,6 +99,7 @@
         url: '{{ route("transaction.table") }}',
         data: function(d) {
           d.category_filter = $('#category_filter').val()
+          d.range_filter = $('#range').val()
           // return d
         }
       },
@@ -164,13 +170,22 @@
       });
     });
 
-    $('.filters').insertAfter('.dt-search input').css('display', 'inline-block').css('margin-left','10px');
-    $("#category_filter").on('change',function(){
+    $('.filters').insertAfter('.dt-search input').css('display', 'inline-block').css('margin-left', '10px');
+    $('.range').insertAfter('.filters').css('display', 'inline-block').css('margin-left', '10px');
+
+    $("#category_filter").on('change', function() {
       let filter = $('#category_filter').val();
       table.draw();
     })
-    
-
+    $("#range").on('change', function() {
+      let range = $('#range').val();
+      table.draw();
+    })
+    $('input[name="daterange"]').daterangepicker({
+            locale: {
+                format: 'YYYY-MM-DD'
+            }
+        });
   })
 </script>
 

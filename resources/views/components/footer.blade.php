@@ -102,4 +102,6 @@
  <script src="{{asset('assets/js/argon-dashboard.min.js?v=2.0.4')}}"></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
  <script src="{{asset('assets/js/dataTables.min.js')}}"></script>
+ <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
  @stack('script')
