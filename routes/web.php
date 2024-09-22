@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ProductsController;
+use App\Models\Categories;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +19,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.index');
-});
+})->name('dashboard');
 Route::get('/products',function(){
-    return view('pages.products');
-});
+    $data['categories'] = Categories::all();
+    return view('pages.products',$data);
+})->name('products');
+Route::get('/categories',[CategoriesController::class,'index'])->name('categories');

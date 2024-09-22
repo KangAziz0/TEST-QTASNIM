@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProductsController extends Controller
 {
@@ -16,6 +17,18 @@ class ProductsController extends Controller
     {
         $products = Product::with('Category')->get();
         return response()->json($products);
+    }
+
+    public function datatable()
+    {
+        $products = Product::latest();
+        return DataTables::of($products)
+            ->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                return '<button data-id="' . $row->id . '" class="btn btn-info edit">Edit</button>      <button data-id="' . $row->id . '" class="btn btn-danger delete">Delete</button>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**
@@ -45,7 +58,8 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::with('Category')->findOrFail($id);
+        return response()->json($product);
     }
 
     /**
@@ -61,7 +75,7 @@ class ProductsController extends Controller
      */
     public function update(ProductRequest $request, string $id)
     {
-        Product::where('id',$id)->update($request->all());
+        Product::where('id', $id)->update($request->all());
         return response()->json(['message' => 'Product Updated']);
     }
 
@@ -70,7 +84,7 @@ class ProductsController extends Controller
      */
     public function destroy(string $id)
     {
-        Product::where('id',$id)->delete();
+        Product::where('id', $id)->delete();
         return response()->json(['message' => 'Product Deleted']);
     }
 }

@@ -22,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('/products',ProductsController::class);
 Route::apiResource('/categories',CategoriesController::class);
+Route::get('/productsData',[ProductsController::class,'datatable']);
+Route::get('/categoriesTable',[CategoriesController::class,'datatable'])->name('categories.table');
